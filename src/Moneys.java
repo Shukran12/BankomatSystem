@@ -32,6 +32,36 @@ public class Moneys {
 
 
 
+        public void updateUserBalance(String balance) throws IOException {
+           BufferedReader bfr = new BufferedReader(new FileReader("users.txt"));
+           String user = bfr.readLine();
+           String[] users = user.split("-");
+           users[2] = balance;
+           String[] newUser = new String[users.length];
+            for(int q=0; q<users.length; q++){
+                newUser[q] = users[q];
+            }
+            String newUsers2 = Arrays.toString(newUser);
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("users.txt"));
+            bufferedWriter.write(newUsers2.replace("[", "").replace("]", "").replace(", ", "-"));
+            bufferedWriter.close();
+        }
+
+        public static void updateUserBlock() throws IOException {
+            BufferedReader bfr = new BufferedReader(new FileReader("users.txt"));
+            String user = bfr.readLine();
+            String[] users = user.split("-");
+            users[3] = "true";
+            String[] newUser = new String[users.length];
+            for(int q=0; q<users.length; q++){
+                newUser[q] = users[q];
+            }
+            String newUsers2 = Arrays.toString(newUser);
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("users.txt"));
+            bufferedWriter.write(newUsers2.replace("[", "").replace("]", "").replace(", ", "-"));
+            bufferedWriter.close();
+        }
+
 
         }
 

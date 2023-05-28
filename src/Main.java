@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Map<Integer, Integer> map = new HashMap<>();
-        List<Users> users = new ArrayList<>();
-        users.add(new Users("Sukran", "1", 3450));
-        users.add(new Users("Test", "2", 345));
-        users.add(new Users("Ceyhun", "2", 345));
         System.out.println("Ad Daxil edin:");
         Scanner sc = new Scanner(System.in);
-        String name = sc.next();
+        BufferedReader bfr = new BufferedReader(new FileReader("users.txt"));
+        String user = bfr.readLine();
+
+        String[] users = user.split(", ");
         int totalCash = 0;
         try {
 
@@ -40,22 +39,35 @@ public class Main {
         }
 
         int tryPass = 0;
+        String name = sc.next();
+
+
+        BufferedReader bfr2 = new BufferedReader(new FileReader("users.txt"));
+        String user2 = bfr.readLine();
+        String[] users2 = user.split("-");
 
       //  int pass = sc.nextInt();
-        for(int i=0; i<users.size(); i++){
-            if(users.get(i).getName().equals(name)){
+        for(int i=0; i<users.length; i++) {
+
+            if(users[i].split("-")[0].equals(name) && users2[3].equals("false")){
                 System.out.println("Şifrəni Daxil Edin");
+
+
 
                 boolean s = true;
                 while (s){
                     String pass = sc.next();
-                    if(users.get(i).getPass().equals(pass)){
-                        System.out.println("Balans: "+users.get(i).getBalance()+" Azn\n Məbləği daxil edin");
-                        int money = sc.nextInt();
-                        if(money>users.get(i).getBalance()){
+
+
+                    if(users[i].split("-")[1].equals(pass)){
+                        System.out.println("Balans: "+users[i].split("-")[2]+" Azn\n Məbləği daxil edin");
+
+                        int money1 = sc.nextInt();
+                        int money = money1;
+                        if(money>Integer.parseInt(users[i].split("-")[2])){
                             System.out.println("Balansinizda Kifayet Qeder Mebleg Yoxdur!");
                         }else if(money > totalCash) {
-                            System.out.println("Əskinaz Yoxdu");
+                            System.out.println("Əskinaz Yoxdu!");
                         }else {
                             Moneys moneys = new Moneys();
                             int[] arr = {100, 50, 20, 10, 5,1};
@@ -71,6 +83,7 @@ public class Main {
                                         for(int r=0; r< map.size(); r++){
 //
                                             moneys.updateMoney(String.valueOf(arr[y]), String.valueOf(map.get(arr[y]) - qtye));
+
                                             break;
                                         }
                                     }else{
@@ -87,6 +100,8 @@ public class Main {
 
 
                             }
+                            moneys.updateUserBalance(String.valueOf(Integer.parseInt(users[i].split("-")[2]) -  money1));
+
 
 
                         }
@@ -96,7 +111,7 @@ public class Main {
                        tryPass++;
                         System.out.println("Yanlış Şifrə: Cəhd Sayı "+tryPass);
                         if(tryPass == 3){
-
+                            Moneys.updateUserBlock();
                             System.out.println("Istifadeci Bloklandi!");
                             s=false;
                         }
@@ -105,21 +120,14 @@ public class Main {
                 }
                 break;
 
-            }else{
+            }else if(!users[i].split("-")[0].equals(name)){
                 System.out.println("Bele Istifadeci Yoxdur!");
+                break;
+            }else{
+                System.out.println("Istifadeci Bloklanib!");
                 break;
             }
         }
-
-
-
-
-
-
-
-
-
-
 
 
 

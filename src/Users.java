@@ -25,6 +25,10 @@ public class Users {
     public int getBalance() {
         return balance;
     }
+    public int setBalance(int balance){
+        this.balance = balance;
+        return balance;
+    }
 
 
 }
